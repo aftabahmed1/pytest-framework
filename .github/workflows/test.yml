@@ -1,0 +1,34 @@
+name: API Tests
+
+on:
+  push:
+    branches: [main]
+    branches: [staging]
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    env:
+      ENVIRONMENT: production
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Tests
+        run: pytest --junitxml=report.xml
+  staging:
+    runs-on: ubuntu-latest
+    env:
+      ENVIRONMENT: staging
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Tests
+        run: pytest --junitxml=report.xml
